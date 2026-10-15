@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Беларусь — концепт главной страницы</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{
+  --bereza:#F5F6F2;   /* берёста — фон */
+  --chernila:#0F2433; /* озёрные чернила — текст, тёмные секции */
+  --vasilek:#3D5FD9;  /* василёк — акцент */
+  --vasilek-light:#9DB0FF;
+  --tuman:#DFE5E4;    /* туман — подложки */
+  --rushnik:#C0283A;  /* рушник — только орнамент */
+  --mute:#4A5A66;
+  --display:"Forum", "Times New Roman", serif;
+  --body:"Golos Text", -apple-system, "PingFang SC", "Geeza Pro", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bereza);color:var(--chernila);font:400 17px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+html[lang="zh"] body{font-family:"PingFang SC","Noto Sans SC",var(--body)}
+html[lang="ar"] body{font-family:"Geeza Pro","Noto Naskh Arabic",var(--body)}
+html[lang="zh"] .display, html[lang="ar"] .display{font-family:inherit;font-weight:600;letter-spacing:0}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--vasilek);outline-offset:3px}
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+.display{font-family:var(--display);font-weight:400;letter-spacing:-.01em;line-height:1.02}
+.mono{font-family:var(--mono);font-size:13px;letter-spacing:.02em}
+
+/* ── шапка ── */
+.top{position:fixed;inset:0 0 auto 0;z-index:30;color:#fff;transition:background .3s,color .3s}
+.top.solid{background:rgba(245,246,242,.94);backdrop-filter:blur(10px);color:var(--chernila);box-shadow:0 1px 0 var(--tuman)}
+.top .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:400 22px/1 var(--display);letter-spacing:.12em}
+.brand svg{width:22px;height:22px;color:var(--rushnik)}
+.top nav{display:flex;gap:22px;margin-inline-start:auto;font-size:15px}
+.top nav a{text-decoration:none;opacity:.9}
+.top nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:5px}
+.langs{display:flex;gap:2px;border:1px solid currentColor;border-radius:999px;padding:3px}
+.langs button{all:unset;cursor:pointer;font:500 13px/1 var(--body);padding:7px 10px;border-radius:999px}
+.langs button[aria-pressed="true"]{background:currentColor}
+.langs button[aria-pressed="true"] span{color:var(--chernila)}
+.top.solid .langs button[aria-pressed="true"] span{color:#fff}
+.brand .tag{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:5px 8px;opacity:.8}
+.concept-badge{position:fixed;z-index:40;inset:auto auto 16px 16px;background:var(--chernila);color:#fff;font:500 12px/1 var(--mono);padding:9px 12px;border-radius:999px;letter-spacing:.04em}
+html[dir="rtl"] .brand .tag{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:5px 8px;opacity:.8}
+.concept-badge{inset:auto 16px 16px auto}
+
+/* ── hero ── */
+.hero{position:relative;height:100svh;min-height:620px;overflow:hidden;color:#fff;background:#0b1a24}
+.hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,26,36,.45) 0%,rgba(11,26,36,0) 28%,rgba(11,26,36,0) 50%,rgba(11,26,36,.62) 100%)}
+.hero .copy{position:absolute;z-index:2;inset:auto 0 110px 0}
+.hero h1{font-size:clamp(54px,9.2vw,148px);margin:0 0 18px;max-width:14ch}
+html[lang="zh"] .hero h1{font-size:clamp(40px,6.4vw,104px);max-width:none}
+.hero .sub{font-size:clamp(17px,1.6vw,21px);max-width:34ch;margin:0 0 30px;opacity:.95}
+.hero .slogan-note{display:block;margin-top:-6px;margin-bottom:18px;opacity:.7}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:10px;font:500 16px/1 var(--body);padding:16px 24px;border-radius:999px;background:var(--vasilek);color:#fff;transition:transform .2s,background .2s}
+.btn:hover{background:#2f4fc4;transform:translateY(-1px)}
+.btn.ghost{background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.5)}
+.btn.ghost:hover{background:rgba(255,255,255,.24)}
+.btn svg{width:16px;height:16px}
+.hero .where{position:absolute;z-index:2;inset:auto 24px 110px auto;text-align:end;opacity:.85}
+html[dir="rtl"] .hero .where{inset:auto auto 110px 24px}
+
+/* вытинанка: бумажный слой со звездой-вырезом */
+#paper{position:absolute;inset:0;z-index:5;width:100%;height:100%;pointer-events:none}
+.cut-edge{position:absolute;z-index:3;left:0;right:0;bottom:-1px;height:34px;color:var(--bereza)}
+.cut-edge svg{width:100%;height:100%;display:block}
+
+/* ── настроения ── */
+section{padding:110px 0}
+.eyebrow{display:flex;align-items:center;gap:10px;color:var(--rushnik);margin-bottom:14px}
+.eyebrow svg{width:14px;height:14px}
+h2{font-size:clamp(38px,5vw,68px);margin:0 0 14px;max-width:16ch}
+.lead{color:var(--mute);max-width:52ch;margin:0 0 48px;font-size:18px}
+.moods{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.mood{position:relative;text-decoration:none;border-radius:6px;overflow:hidden;background:var(--chernila);color:#fff;aspect-ratio:4/5;display:block}
+.mood img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.mood::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,36,51,0) 40%,rgba(15,36,51,.85) 100%)}
+.mood:hover img{transform:scale(1.045)}
+.mood .glyph{position:absolute;z-index:2;top:18px;inset-inline-start:18px;width:46px;height:46px;border-radius:50%;background:var(--bereza);color:var(--rushnik);display:grid;place-items:center}
+.mood .glyph svg{width:24px;height:24px}
+.mood .txt{position:absolute;z-index:2;inset:auto 22px 22px 22px}
+.mood h3{font:400 34px/1.05 var(--display);margin:0 0 8px}
+html[lang="zh"] .mood h3,html[lang="ar"] .mood h3{font-family:inherit;font-weight:600;font-size:28px}
+.mood p{margin:0 0 12px;font-size:15px;opacity:.92}
+.mood .mono{opacity:.75}
+
+/* ── сезон ── */
+.season{background:var(--tuman)}
+.season .grid{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+.season figure{margin:0;border-radius:6px;overflow:hidden;aspect-ratio:4/3}
+.season figure img{width:100%;height:100%;object-fit:cover}
+.events{list-style:none;padding:0;margin:28px 0 0;border-top:1px solid #c3cccb}
+.events li{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid #c3cccb}
+.events .mono{color:var(--vasilek);font-weight:500;padding-top:3px}
+html[dir="rtl"] .events .mono, html[dir="rtl"] .hero .where{direction:ltr;unicode-bidi:isolate;text-align:right}
+.events b{font-weight:600;display:block}
+.events span{color:var(--mute);font-size:15px}
+
+/* ── карта ── */
+.mapsec{background:var(--chernila);color:#fff}
+.mapsec .lead{color:#b9c6cf}
+.mapgrid{display:grid;grid-template-columns:1.35fr 1fr;gap:48px;align-items:start}
+.map svg{width:100%;height:auto;overflow:visible}
+.map .land{fill:#15344a;stroke:var(--vasilek-light);stroke-width:1.6}
+.map .ray{stroke:rgba(157,176,255,.35);stroke-width:1;stroke-dasharray:3 5;fill:none}
+.map .pt circle{fill:var(--bereza);transition:r .2s}
+.map .pt.capital circle{fill:var(--rushnik)}
+.map .pt text{fill:#fff;font:500 27px var(--body)}
+.map .pt .km{fill:var(--vasilek-light);font:500 20px var(--mono)}
+.map .pt{cursor:pointer}
+.map .pt:hover circle,.map .pt.on circle{r:11}
+.dest{list-style:none;padding:0;margin:0;border-top:1px solid rgba(255,255,255,.15)}
+.dest li{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.15);cursor:pointer}
+.dest li.on, .dest li:hover{color:var(--vasilek-light)}
+.dest .mono{color:#b9c6cf}
+.mapnote{margin-top:16px;color:#8fa1ad}
+
+/* ── Лида 2027 ── */
+.feature{position:relative;padding:0;min-height:560px;color:#fff;display:flex;align-items:flex-end;overflow:hidden}
+.feature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feature::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,36,51,.82) 0%,rgba(15,36,51,.2) 60%)}
+html[dir="rtl"] .feature::after{background:linear-gradient(270deg,rgba(15,36,51,.82) 0%,rgba(15,36,51,.2) 60%)}
+.feature .wrap{position:relative;z-index:2;padding:90px 0}
+.feature .year{font:400 clamp(90px,14vw,200px)/.85 var(--display);color:var(--vasilek-light);margin:0}
+.feature h2{max-width:18ch}
+.feature p{max-width:44ch;font-size:18px;opacity:.92;margin:0 0 28px}
+
+/* ── как приехать ── */
+.plan .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:#fff;border:1px solid var(--tuman);border-radius:6px;padding:30px}
+.card .ic{width:40px;height:40px;color:var(--vasilek);margin-bottom:18px}
+.card h3{font:600 20px/1.25 var(--body);margin:0 0 10px}
+.card p{margin:0;color:var(--mute);font-size:16px}
+.stamp{margin-top:22px;color:var(--mute)}
+
+footer{background:var(--chernila);color:#b9c6cf;padding:56px 0 90px;font-size:14px}
+footer .brand{color:#fff;margin-bottom:18px}
+footer p{max-width:80ch;margin:0 0 8px}
+
+/* модалка видео */
+dialog{border:0;padding:0;background:#000;width:min(1100px,92vw);border-radius:6px}
+dialog::backdrop{background:rgba(5,14,20,.82)}
+dialog video{width:100%}
+dialog button{all:unset;cursor:pointer;position:absolute;top:10px;inset-inline-end:14px;color:#fff;font-size:28px;z-index:2}
+
+@media (max-width:980px){
+  .top nav{display:none}
+  .moods{grid-template-columns:repeat(2,1fr)}
+  .season .grid,.mapgrid{grid-template-columns:1fr}
+  .plan .cols{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .wrap{width:calc(100% - 32px)}
+  .moods{grid-template-columns:1fr}
+  .mood{aspect-ratio:5/4}
+  .hero .where{display:none}
+  .langs button{padding:7px 8px}
+  .brand span{display:none}
+  section{padding:76px 0}
+  .events li{grid-template-columns:1fr;gap:4px}
+}
+.shot .hero{height:900px;min-height:0}
+.shot .top{position:absolute}
+.shot .brand .tag{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:5px 8px;opacity:.8}
+.concept-badge{position:absolute}
+@media (prefers-reduced-motion:reduce){
+  #paper{display:none}
+  .mood img{transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- символы орнамента -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="g-star" viewBox="-12 -12 24 24"><path fill="currentColor" d="M0,-11 L3.5,-8.1 8.1,-8.1 8.1,-3.5 11,0 8.1,3.5 8.1,8.1 3.5,8.1 0,11 -3.5,8.1 -8.1,8.1 -8.1,3.5 -11,0 -8.1,-3.5 -8.1,-8.1 -3.5,-8.1Z M0,-4 L4,0 0,4 -4,0Z" fill-rule="evenodd"/></symbol>
+    <symbol id="g-tree" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" d="M12 2v20M12 7l-5-4M12 7l5-4M12 12l-6-4M12 12l6-4M12 17l-7-4M12 17l7-4"/></symbol>
+    <symbol id="g-tower" viewBox="0 0 24 24"><path fill="currentColor" d="M5 22V9h2V6h2v3h2V3h2v6h2V6h2v3h2v13h-6v-5h-2v5z"/></symbol>
+    <symbol id="g-wave" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M2 8l5-4 5 4 5-4 5 4M2 14l5-4 5 4 5-4 5 4M2 20l5-4 5 4 5-4 5 4"/></symbol>
+    <symbol id="g-field" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 2l10 10-10 10L2 12z"/><path fill="currentColor" d="M12 7.5l1.5 1.5-1.5 1.5-1.5-1.5zM12 13.5l1.5 1.5-1.5 1.5-1.5-1.5zM7.5 12l1.5-1.5 1.5 1.5-1.5 1.5zM13.5 12l1.5-1.5 1.5 1.5-1.5 1.5z"/></symbol>
+    <symbol id="g-gear" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10 2h4v3l2.6 1.1 2.1-2.1 2.8 2.8-2.1 2.1L20.5 11h3v4h-3l-1.1 2.6 2.1 2.1-2.8 2.8-2.1-2.1L14 21.5v2.5h-4v-2.5l-2.6-1.1-2.1 2.1-2.8-2.8 2.1-2.1L3.5 15h-3v-4h3l1.1-2.6-2.1-2.1 2.8-2.8 2.1 2.1L10 5z M12 9l4 4-4 4-4-4z"/></symbol>
+  </defs>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#hero"><svg aria-hidden="true"><use href="#g-star"/></svg>BELARUS<span class="tag">концепт · 10.2026</span></a>
+    <nav aria-label="Основное меню">
+      <a href="#moods" data-i18n="nav_where">Куда поехать</a>
+      <a href="#season" data-i18n="nav_events">События</a>
+      <a href="#map" data-i18n="nav_map">Карта</a>
+      <a href="#plan" data-i18n="nav_plan">Как приехать</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Язык">
+      <button data-lang="ru" aria-pressed="true"><span>RU</span></button>
+      <button data-lang="en" aria-pressed="false"><span>EN</span></button>
+      <button data-lang="zh" aria-pressed="false"><span>中文</span></button>
+      <button data-lang="ar" aria-pressed="false"><span>العربية</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="hero" aria-label="Главный экран">
+  <img class="poster" src="assets/img/hero.jpg" alt="">
+  <video id="herovid" autoplay muted loop playsinline poster="assets/img/hero.jpg"><source src="assets/hero.mp4" type="video/mp4"></video>
+  <svg id="paper" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <pattern id="paperdots" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M1.5 1 L2 1.5 1.5 2 1 1.5Z" fill="#E6EAE6"/></pattern>
+      <mask id="cut"><rect width="100" height="100" fill="#fff"/><g id="hole" fill="#000"><path d="M0,-11 L3.5,-8.1 8.1,-8.1 8.1,-3.5 11,0 8.1,3.5 8.1,8.1 3.5,8.1 0,11 -3.5,8.1 -8.1,8.1 -8.1,3.5 -11,0 -8.1,-3.5 -8.1,-8.1 -3.5,-8.1Z"/></g></mask>
+    </defs>
+    <g mask="url(#cut)"><rect width="100" height="100" fill="#F5F6F2"/></g>
+  </svg>
+  <div class="copy wrap">
+    <h1 class="display" data-i18n="hero_title">Беларусь. Время дышать.</h1>
+    <span class="mono slogan-note" data-i18n="hero_note">* рабочий слоган — до итогов конкурса бренда</span>
+    <p class="sub" data-i18n="hero_sub">Тысячи озёр, пуща с зубрами и замки из списка ЮНЕСКО — в паре часов дороги от Минска.</p>
+    <div class="btns">
+      <a class="btn" href="#moods" data-i18n="cta_pick">Подобрать поездку</a>
+      <button class="btn ghost" id="playfilm"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M3 1.5v13l11-6.5z"/></svg><span data-i18n="cta_film">Смотреть фильм</span></button>
+    </div>
+  </div>
+  <div class="where mono" data-i18n="hero_where">Браславские озёра · 55.6° N 27.0° E</div>
+  <div class="cut-edge" aria-hidden="true">
+    <svg viewBox="0 0 240 34" preserveAspectRatio="none"><defs><pattern id="teeth" width="24" height="34" patternUnits="userSpaceOnUse"><path d="M0 34 L0 22 L12 10 L24 22 L24 34Z" fill="currentColor"/></pattern></defs><rect width="240" height="34" fill="url(#teeth)"/></svg>
+  </div>
+</section>
+
+<section id="moods">
+  <div class="wrap">
+    <div class="eyebrow mono"><svg aria-hidden="true"><use href="#g-star"/></svg><span data-i18n="moods_eyebrow">Куда поехать</span></div>
+    <h2 class="display" data-i18n="moods_title">Какой будет ваша поездка?</h2>
+    <p class="lead" data-i18n="moods_lead">Выберите настроение — подскажем места, маршруты и лучший сезон.</p>
+    <div class="moods">
+      <a class="mood" href="#map" data-pt="pushcha"><img src="assets/img/nature.jpg" alt="" loading="lazy"><span class="glyph"><svg><use href="#g-tree"/></svg></span><div class="txt"><h3 data-i18n="m1_t">Природа и озёра</h3><p data-i18n="m1_d">Пуща, Нарочь, Браслав, Полесье. Тишина, которую слышно.</p><span class="mono" data-i18n="m1_f">Беловежская пуща · ≈ 360 км</span></div></a>
+      <a class="mood" href="#map" data-pt="mir"><img src="assets/img/castles.jpg" alt="" loading="lazy"><span class="glyph"><svg><use href="#g-tower"/></svg></span><div class="txt"><h3 data-i18n="m2_t">Замки и история</h3><p data-i18n="m2_d">Мир, Несвиж, Новогрудок, Лида. Четыре объекта ЮНЕСКО.</p><span class="mono" data-i18n="m2_f">Мирский замок · ≈ 95 км</span></div></a>
+      <a class="mood" href="#map" data-pt="naroch"><img src="assets/img/health.jpg" alt="" loading="lazy"><span class="glyph"><svg><use href="#g-wave"/></svg></span><div class="txt"><h3 data-i18n="m3_t">Здоровье</h3><p data-i18n="m3_d">Санатории у озёр и сосновых лесов, баня и неспешный ритм.</p><span class="mono" data-i18n="m3_f">Нарочь · ≈ 150 км</span></div></a>
+      <a class="mood" href="#map"><img src="assets/img/village.jpg" alt="" loading="lazy"><span class="glyph"><svg><use href="#g-field"/></svg></span><div class="txt"><h3 data-i18n="m4_t">Деревня и вкус</h3><p data-i18n="m4_d">Агроусадьбы, драники со сметаной, гастрофесты и сады.</p><span class="mono" data-i18n="m4_f">1 441 агроусадьба по всей стране</span></div></a>
+      <a class="mood" href="#map" data-pt="minsk"><img src="assets/img/city.jpg" alt="" loading="lazy"><span class="glyph"><svg><use href="#g-star"/></svg></span><div class="txt"><h3 data-i18n="m5_t">Город и события</h3><p data-i18n="m5_d">Минск, Витебск, Гродно: театры, фестивали, вечерние набережные.</p><span class="mono" data-i18n="m5_f">Национальная библиотека · Минск</span></div></a>
+      <a class="mood" href="#map"><img src="assets/img/industry.jpg" alt="" loading="lazy"><span class="glyph"><svg><use href="#g-gear"/></svg></span><div class="txt"><h3 data-i18n="m6_t">Индустрия и техника</h3><p data-i18n="m6_d">Карьерные гиганты, заводские экскурсии и индустриальные парки.</p><span class="mono" data-i18n="m6_f">Жодино · ≈ 50 км</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="season" id="season">
+  <div class="wrap grid">
+    <figure><img src="assets/img/autumn.jpg" alt="" loading="lazy"></figure>
+    <div>
+      <div class="eyebrow mono"><svg aria-hidden="true"><use href="#g-star"/></svg><span data-i18n="season_eyebrow">Сезон · осень 2026</span></div>
+      <h2 class="display" data-i18n="season_title">Сейчас в Беларуси — золотая осень</h2>
+      <p class="lead" style="margin-bottom:0" data-i18n="season_lead">Клюква на болотах, туман над озёрами и премьеры нового театрального сезона.</p>
+      <ul class="events">
+        <li><span class="mono" data-i18n="e1_d">30.10 — 06.11</span><div><b data-i18n="e1_t">«Лістапад»</b><span data-i18n="e1_p">Минский международный кинофестиваль · Минск</span></div></li>
+        <li><span class="mono" data-i18n="e2_d">21.11</span><div><b data-i18n="e2_t">100 лет театру имени Якуба Коласа</b><span data-i18n="e2_p">Юбилейный сезон · Витебск</span></div></li>
+        <li><span class="mono" data-i18n="e3_d">19 — 20.12</span><div><b data-i18n="e3_t">Рождественский оперный форум</b><span data-i18n="e3_p">Премьера «Итальянки в Алжире» · Большой театр, Минск</span></div></li>
+        <li><span class="mono" data-i18n="e4_d">Зима</span><div><b data-i18n="e4_t">Поместье Деда Мороза</b><span data-i18n="e4_p">Сказочный сезон · Беловежская пуща</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="mapsec" id="map">
+  <div class="wrap">
+    <div class="eyebrow mono" style="color:var(--vasilek-light)"><svg aria-hidden="true"><use href="#g-star"/></svg><span data-i18n="map_eyebrow">Карта</span></div>
+    <h2 class="display" data-i18n="map_title">Из Минска — на выходные</h2>
+    <p class="lead" data-i18n="map_lead">Нажмите на точку: расстояние по дороге от столицы, примерно.</p>
+    <div class="mapgrid">
+      <div class="map">
+        <svg viewBox="-40 -30 1080 930" role="img" aria-label="Карта Беларуси">
+          <path class="land" d="M75,402 87,402 100,401 113,399 127,396 140,392 154,387 168,381 182,373 196,365 209,356 220,347 231,337 239,326 246,315 252,304 257,292 260,279 264,267 269,256 275,246 282,236 290,227 299,218 308,210 319,203 328,196 336,188 342,180 347,171 351,162 352,153 353,143 351,133 351,124 352,116 355,108 358,101 362,95 368,90 375,85 383,82 392,77 401,72 412,67 423,61 435,54 447,47 461,39 475,30 489,23 503,18 517,15 531,13 545,14 559,16 573,20 587,25 599,31 610,36 619,42 627,47 633,53 638,58 642,64 644,69 646,74 649,77 653,80 657,81 662,82 668,81 674,79 681,77 689,75 697,74 706,75 716,76 727,78 738,82 750,86 763,91 775,97 785,104 793,111 800,119 806,128 810,137 813,147 814,157 815,167 815,176 815,185 814,193 813,201 811,208 809,214 806,220 805,228 804,236 806,245 809,255 813,267 818,279 825,292 833,307 841,320 849,332 856,343 863,352 869,360 875,367 881,372 886,376 891,380 895,384 898,388 900,392 901,396 902,400 902,404 901,409 902,413 903,417 906,421 910,424 916,428 922,432 930,436 939,440 947,444 954,449 961,453 968,458 973,464 979,469 983,475 987,481 989,486 991,492 991,498 991,503 989,508 986,513 982,518 977,523 971,527 965,531 957,534 950,536 941,537 932,538 922,537 911,537 902,536 893,536 885,537 879,537 873,538 869,540 865,541 863,543 861,546 860,550 859,554 860,558 861,564 862,570 865,577 868,584 871,592 874,601 877,611 880,622 883,634 887,646 890,660 893,674 894,686 894,697 892,707 888,715 882,721 874,725 865,728 854,730 843,731 834,734 825,736 817,739 811,743 805,747 800,751 796,756 792,762 789,768 786,776 784,784 781,792 780,802 779,812 778,824 776,833 774,841 772,847 769,852 765,855 761,856 756,855 751,853 745,851 738,850 731,849 722,849 713,848 702,849 691,849 679,850 669,851 659,850 650,849 642,847 636,844 630,840 626,836 622,831 619,827 615,824 611,822 607,821 602,822 598,823 593,826 588,830 583,833 578,835 573,836 568,837 563,836 558,835 553,832 548,829 543,826 536,824 530,822 522,820 514,818 504,817 495,816 484,816 473,815 462,813 450,811 438,808 424,804 411,800 397,796 382,790 367,785 353,781 339,777 325,773 311,770 298,768 284,765 271,764 258,762 245,761 233,760 221,760 210,759 199,759 188,759 178,760 168,761 159,763 150,765 141,769 133,773 125,777 117,783 110,789 103,794 96,799 89,803 82,806 76,809 69,811 63,813 57,814 51,813 46,811 42,808 39,804 36,798 35,791 34,782 33,772 33,762 31,752 30,742 28,732 25,722 22,712 18,701 14,691 12,682 11,673 11,665 13,657 16,650 21,644 28,639 36,635 42,630 48,624 53,618 57,611 60,604 62,596 63,588 64,579 63,570 62,561 61,553 59,544 57,535 54,527 51,518 47,510 44,501 41,492 39,483 37,474 35,465 34,455 33,446 32,436 33,427 36,420 40,414 46,409 54,405 63,403Z"/>
+          <g id="rays"></g>
+          <g id="pts"></g>
+        </svg>
+      </div>
+      <div>
+        <ul class="dest" id="dest"></ul>
+        <p class="mono mapnote" data-i18n="map_note">≈ км по дороге от Минска. Точки — по реальным координатам.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="lida">
+  <img src="assets/img/lida.jpg" alt="" loading="lazy">
+  <div class="wrap">
+    <p class="year">2027</p>
+    <h2 class="display" data-i18n="lida_title">Лида — туристическая столица СНГ</h2>
+    <p data-i18n="lida_text">Замок XIV века, фестивали и целый год событий. Минск в 2027-м — молодёжная столица Содружества, Молодечно — культурная.</p>
+    <a class="btn" href="#plan" data-i18n="lida_cta">Узнать о программе первым</a>
+  </div>
+</section>
+
+<section class="plan" id="plan">
+  <div class="wrap">
+    <div class="eyebrow mono"><svg aria-hidden="true"><use href="#g-star"/></svg><span data-i18n="plan_eyebrow">Перед поездкой</span></div>
+    <h2 class="display" data-i18n="plan_title">Как приехать</h2>
+    <p class="lead" data-i18n="plan_lead">Главное о въезде и дороге — коротко. Подробности и визовый помощник — в один клик.</p>
+    <div class="cols">
+      <div class="card"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 3h16v18H4zM8 8h8M8 12h8M8 16h5"/></svg><h3 data-i18n="p1_t">Без визы до 30 дней</h3><p data-i18n="p1_d">Для граждан многих стран — при въезде через аэропорты. С Китаем действует взаимный безвизовый режим.</p></div>
+      <div class="card"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg><h3 data-i18n="p2_t">Прямые рейсы</h3><p data-i18n="p2_d">Минск связан прямыми рейсами с Пекином, Урумчи, Сианем и Санья, а также с городами СНГ.</p></div>
+      <div class="card"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 5h18v14H3zM3 9h18M7 15h4"/></svg><h3 data-i18n="p3_t">Электронная виза</h3><p data-i18n="p3_d">Если безвиз вам не подходит — электронную визу можно оформить онлайн.</p></div>
+    </div>
+    <p class="mono stamp" data-i18n="plan_stamp">Условия въезда — на октябрь 2026. Блок обновляется автоматически при изменении правил.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><svg aria-hidden="true" style="color:var(--rushnik)"><use href="#g-star"/></svg>BELARUS</div>
+    <p data-i18n="f1">Концепция главной страницы туристического портала. Подготовлена [Название компании] для Национального агентства по туризму.</p>
+    <p data-i18n="f2">Фотографии и видео сгенерированы с помощью ИИ для демонстрации; архитектурные объекты — по фотографиям Wikimedia Commons (CC BY-SA). Слоган — рабочий, до итогов конкурса бренда. Переводы — демонстрационные, в проекте — вычитка носителями языка.</p>
+  </div>
+</footer>
+
+
+<dialog id="film"><button aria-label="Закрыть">×</button><video controls playsinline preload="none" src="assets/hero.mp4"></video></dialog>
+
+<script>
+const I18N = {
+ en:{nav_where:"Where to go",nav_events:"Events",nav_map:"Map",nav_plan:"Getting here",
+  hero_title:"Belarus. Time to breathe.",hero_note:"* working slogan — until the brand contest results",
+  hero_sub:"Thousands of lakes, a primeval forest with bison and UNESCO castles — a couple of hours' drive from Minsk.",
+  cta_pick:"Find your trip",cta_film:"Watch the film",hero_where:"Braslav Lakes · 55.6° N 27.0° E",
+  moods_eyebrow:"Where to go",moods_title:"What kind of trip are you after?",moods_lead:"Pick a mood — we’ll suggest places, routes and the best season.",
+  m1_t:"Nature & lakes",m1_d:"Białowieża Forest, Naroch, Braslav, Polesie. Silence you can hear.",m1_f:"Belovezhskaya Pushcha · ≈ 360 km",
+  m2_t:"Castles & history",m2_d:"Mir, Nesvizh, Novogrudok, Lida. Four UNESCO sites.",m2_f:"Mir Castle · ≈ 95 km",
+  m3_t:"Wellness",m3_d:"Health resorts by lakes and pine forests, sauna and a slow pace.",m3_f:"Naroch · ≈ 150 km",
+  m4_t:"Village & flavours",m4_d:"Farm stays, potato pancakes with sour cream, food festivals and orchards.",m4_f:"1,441 farm stays across the country",
+  m5_t:"City & events",m5_d:"Minsk, Vitebsk, Grodno: theatres, festivals, evening embankments.",m5_f:"National Library · Minsk",
+  m6_t:"Industry & machines",m6_d:"Mining giants, factory tours and industrial parks.",m6_f:"Zhodino · ≈ 50 km",
+  season_eyebrow:"Season · autumn 2026",season_title:"Golden autumn in Belarus right now",season_lead:"Cranberries in the bogs, mist over the lakes and premieres of the new theatre season.",
+  e1_d:"30.10 — 06.11",e1_t:"Listapad",e1_p:"Minsk International Film Festival · Minsk",
+  e2_d:"21.11",e2_t:"Yakub Kolas Theatre turns 100",e2_p:"Anniversary season · Vitebsk",
+  e3_d:"19 — 20.12",e3_t:"Christmas Opera Forum",e3_p:"Premiere of “The Italian Girl in Algiers” · Bolshoi Theatre, Minsk",
+  e4_d:"Winter",e4_t:"Father Frost’s Estate",e4_p:"Fairy-tale season · Belovezhskaya Pushcha",
+  map_eyebrow:"Map",map_title:"A weekend from Minsk",map_lead:"Tap a point: approximate road distance from the capital.",map_note:"≈ road km from Minsk. Points use real coordinates.",
+  lida_title:"Lida — Tourism Capital of the CIS",lida_text:"A 14th-century castle, festivals and a whole year of events. In 2027 Minsk is the CIS Youth Capital and Molodechno the Cultural Capital.",lida_cta:"Be first to see the programme",
+  plan_eyebrow:"Before you go",plan_title:"Getting here",plan_lead:"The essentials on entry and travel. Details and a visa helper are one click away.",
+  p1_t:"Visa-free for up to 30 days",p1_d:"For citizens of many countries arriving by air. China and Belarus have a mutual visa-free regime.",
+  p2_t:"Direct flights",p2_d:"Minsk has direct flights to Beijing, Urumqi, Xi’an and Sanya, as well as to CIS cities.",
+  p3_t:"E-visa",p3_d:"If visa-free entry doesn’t apply to you, you can apply for an e-visa online.",
+  plan_stamp:"Entry rules as of October 2026. This block updates automatically when rules change.",
+  f1:"Homepage concept for the national tourism portal. Prepared by [Company name] for the National Tourism Agency.",
+  f2:"Photos and video are AI-generated for demonstration; landmarks are based on Wikimedia Commons photos (CC BY-SA). The slogan is a working draft. Translations are for demonstration; the project includes native-speaker proofreading."},
+ zh:{nav_where:"去哪儿",nav_events:"活动",nav_map:"地图",nav_plan:"如何抵达",
+  hero_title:"白俄罗斯，自在呼吸。",hero_note:"* 暂定口号，以品牌评选结果为准",
+  hero_sub:"上千个湖泊、栖息着野牛的原始森林、列入联合国教科文组织名录的城堡——距明斯克仅数小时车程。",
+  cta_pick:"挑选行程",cta_film:"观看影片",hero_where:"布拉斯拉夫湖群 · 北纬55.6° 东经27.0°",
+  moods_eyebrow:"去哪儿",moods_title:"您想要怎样的旅行？",moods_lead:"选择一种心情——我们为您推荐地点、路线和最佳季节。",
+  m1_t:"自然与湖泊",m1_d:"别洛韦日森林、纳拉奇湖、布拉斯拉夫、波列西耶。听得见的宁静。",m1_f:"别洛韦日森林 · 约360公里",
+  m2_t:"城堡与历史",m2_d:"米尔、涅斯维日、新格鲁多克、利达。四处世界遗产。",m2_f:"米尔城堡 · 约95公里",
+  m3_t:"康养",m3_d:"湖畔松林间的疗养院、桑拿与慢节奏。",m3_f:"纳拉奇湖 · 约150公里",
+  m4_t:"乡村与美食",m4_d:"农庄民宿、配酸奶油的土豆饼、美食节与果园。",m4_f:"全国1441家农庄民宿",
+  m5_t:"城市与活动",m5_d:"明斯克、维捷布斯克、格罗德诺：剧院、节庆、夜色中的河岸。",m5_f:"国家图书馆 · 明斯克",
+  m6_t:"工业与机械",m6_d:"矿用巨型卡车、工厂参观与工业园区。",m6_f:"若季诺 · 约50公里",
+  season_eyebrow:"季节 · 2026年秋",season_title:"此刻的白俄罗斯：金色秋天",season_lead:"沼泽里的蔓越莓、湖上的晨雾，以及新剧季的首演。",
+  e1_d:"10.30 — 11.06",e1_t:"“落叶”电影节",e1_p:"明斯克国际电影节 · 明斯克",
+  e2_d:"11.21",e2_t:"雅库布·科拉斯剧院百年",e2_p:"周年演出季 · 维捷布斯克",
+  e3_d:"12.19 — 12.20",e3_t:"圣诞歌剧论坛",e3_p:"《阿尔及尔的意大利女郎》首演 · 明斯克大剧院",
+  e4_d:"冬季",e4_t:"严寒老人庄园",e4_p:"童话季 · 别洛韦日森林",
+  map_eyebrow:"地图",map_title:"从明斯克出发的周末",map_lead:"点击地点：距首都的大致公路里程。",map_note:"约数，自明斯克起算的公路里程。地点按真实坐标标注。",
+  lida_title:"利达——独联体旅游之都",lida_text:"十四世纪的城堡、节庆和一整年的活动。2027年明斯克是独联体青年之都，莫洛杰奇诺是文化之都。",lida_cta:"抢先了解活动安排",
+  plan_eyebrow:"出行之前",plan_title:"如何抵达",plan_lead:"入境与交通要点一览，详情和签证助手一键可查。",
+  p1_t:"最长30天免签",p1_d:"多国公民经机场入境可享免签。中国与白俄罗斯互免签证。",
+  p2_t:"直飞航班",p2_d:"明斯克开通直飞北京、乌鲁木齐、西安和三亚的航班，并连通独联体各城市。",
+  p3_t:"电子签证",p3_d:"如不适用免签政策，可在线申请电子签证。",
+  plan_stamp:"入境规定截至2026年10月。规定变化时本栏自动更新。",
+  f1:"国家旅游门户网站首页概念。由[公司名称]为国家旅游局制作。",
+  f2:"照片和视频由人工智能生成，仅供演示；建筑依据维基共享资源照片（CC BY-SA）。口号为暂定。翻译仅供演示，正式项目由母语者审校。"},
+ ar:{nav_where:"إلى أين",nav_events:"الفعاليات",nav_map:"الخريطة",nav_plan:"الوصول",
+  hero_title:"بيلاروس. وقتٌ لتتنفّس.",hero_note:"* شعار مؤقت حتى نتائج مسابقة العلامة",
+  hero_sub:"آلاف البحيرات، وغابة عريقة تعيش فيها ثيران البيسون، وقلاع مدرجة في قائمة اليونسكو — على بُعد ساعتين من مينسك.",
+  cta_pick:"اختر رحلتك",cta_film:"شاهد الفيلم",hero_where:"بحيرات براسلاف · 55.6° ش 27.0° ق",
+  moods_eyebrow:"إلى أين",moods_title:"أي رحلة تريد؟",moods_lead:"اختر الحالة المزاجية، وسنقترح الأماكن والمسارات وأفضل موسم.",
+  m1_t:"الطبيعة والبحيرات",m1_d:"غابة بيلوفيج، ناروتش، براسلاف، بوليسيا. صمتٌ يمكنك سماعه.",m1_f:"غابة بيلوفيج · ≈ 360 كم",
+  m2_t:"القلاع والتاريخ",m2_d:"مير، نيسفيج، نوفوغرودوك، ليدا. أربعة مواقع لليونسكو.",m2_f:"قلعة مير · ≈ 95 كم",
+  m3_t:"الاستشفاء",m3_d:"منتجعات صحية بين البحيرات وغابات الصنوبر، وساونا، وإيقاع هادئ.",m3_f:"ناروتش · ≈ 150 كم",
+  m4_t:"الريف والنكهات",m4_d:"مزارع ضيافة، فطائر البطاطا بالقشدة، مهرجانات طعام وبساتين.",m4_f:"1441 مزرعة ضيافة في أنحاء البلاد",
+  m5_t:"المدينة والفعاليات",m5_d:"مينسك وفيتيبسك وغرودنو: مسارح ومهرجانات وضفاف مسائية.",m5_f:"المكتبة الوطنية · مينسك",
+  m6_t:"الصناعة والآلات",m6_d:"شاحنات التعدين العملاقة وجولات المصانع والمجمعات الصناعية.",m6_f:"جودينو · ≈ 50 كم",
+  season_eyebrow:"الموسم · خريف 2026",season_title:"الخريف الذهبي في بيلاروس الآن",season_lead:"توت بري في المستنقعات، وضباب فوق البحيرات، وعروض الموسم المسرحي الجديد.",
+  e1_d:"30.10 — 06.11",e1_t:"«ليستاباد»",e1_p:"مهرجان مينسك السينمائي الدولي · مينسك",
+  e2_d:"21.11",e2_t:"مئوية مسرح ياكوب كولاس",e2_p:"موسم اليوبيل · فيتيبسك",
+  e3_d:"19 — 20.12",e3_t:"منتدى الأوبرا الميلادي",e3_p:"العرض الأول لأوبرا «الإيطالية في الجزائر» · مسرح البولشوي، مينسك",
+  e4_d:"الشتاء",e4_t:"منزل الجد فروست",e4_p:"موسم الحكايات · غابة بيلوفيج",
+  map_eyebrow:"الخريطة",map_title:"عطلة نهاية الأسبوع من مينسك",map_lead:"اضغط على نقطة: المسافة التقريبية بالطريق من العاصمة.",map_note:"≈ كم بالطريق من مينسك. النقاط وفق الإحداثيات الحقيقية.",
+  lida_title:"ليدا — عاصمة السياحة لرابطة الدول المستقلة",lida_text:"قلعة من القرن الرابع عشر ومهرجانات وعام كامل من الفعاليات. في 2027 مينسك عاصمة الشباب، ومولوديتشنو عاصمة الثقافة.",lida_cta:"كن أول من يعرف البرنامج",
+  plan_eyebrow:"قبل السفر",plan_title:"الوصول",plan_lead:"أهم المعلومات عن الدخول والسفر باختصار. التفاصيل ومساعد التأشيرة بنقرة واحدة.",
+  p1_t:"دون تأشيرة حتى 30 يوماً",p1_d:"لمواطني دول عديدة عند الدخول عبر المطارات.",
+  p2_t:"رحلات مباشرة",p2_d:"ترتبط مينسك برحلات مباشرة مع بكين وأورومتشي وشيان وسانيا ومدن رابطة الدول المستقلة.",
+  p3_t:"التأشيرة الإلكترونية",p3_d:"إذا لم ينطبق عليك الإعفاء من التأشيرة، يمكنك التقدم بطلب تأشيرة إلكترونية عبر الإنترنت.",
+  plan_stamp:"قواعد الدخول حتى أكتوبر 2026. يتم تحديث هذا القسم تلقائياً عند تغيّر القواعد.",
+  f1:"مفهوم الصفحة الرئيسية للبوابة السياحية الوطنية. أعدته [اسم الشركة] للوكالة الوطنية للسياحة.",
+  f2:"الصور والفيديو مولّدة بالذكاء الاصطناعي لأغراض العرض؛ المعالم مستندة إلى صور ويكيميديا كومنز (CC BY-SA). الشعار مؤقت. الترجمات للعرض، ويشمل المشروع تدقيقاً من متحدثين أصليين."}
+};
+// RU берём из разметки
+const RU = {}; document.querySelectorAll("[data-i18n]").forEach(el => RU[el.dataset.i18n] = el.textContent);
+I18N.ru = RU;
+
+const PTS = {"minsk": [459.3, 403.7], "mir": [344.5, 483.8], "nesvizh": [366.6, 524.7], "brest": [52.7, 724.0], "pushcha": [65.4, 642.1], "naroch": [368.7, 225.8], "braslav": [404.5, 94.1], "polotsk": [587.8, 120.8], "grodno": [66.4, 442.9], "vitebsk": [737.3, 174.2], "lida": [221.2, 405.5], "gomel": [821.6, 665.2], "pripyat": [547.8, 724.0]};
+const DEST = [
+  {id:"mir",km:95,ru:"Мирский замок",en:"Mir Castle",zh:"米尔城堡",ar:"قلعة مير"},
+  {id:"nesvizh",km:120,ru:"Несвиж",en:"Nesvizh",zh:"涅斯维日",ar:"نيسفيج"},
+  {id:"naroch",km:150,ru:"Нарочь",en:"Naroch",zh:"纳拉奇湖",ar:"ناروتش"},
+  {id:"lida",km:160,ru:"Лида",en:"Lida",zh:"利达",ar:"ليدا"},
+  {id:"polotsk",km:230,ru:"Полоцк",en:"Polotsk",zh:"波洛茨克",ar:"بولوتسك"},
+  {id:"braslav",km:240,ru:"Браславские озёра",en:"Braslav Lakes",zh:"布拉斯拉夫湖群",ar:"بحيرات براسلاف"},
+  {id:"grodno",km:280,ru:"Гродно",en:"Grodno",zh:"格罗德诺",ar:"غرودنو"},
+  {id:"vitebsk",km:290,ru:"Витебск",en:"Vitebsk",zh:"维捷布斯克",ar:"فيتيبسك"},
+  {id:"gomel",km:310,ru:"Гомель",en:"Gomel",zh:"戈梅利",ar:"غوميل"},
+  {id:"brest",km:350,ru:"Брест",en:"Brest",zh:"布列斯特",ar:"بريست"},
+  {id:"pushcha",km:360,ru:"Беловежская пуща",en:"Belovezhskaya Pushcha",zh:"别洛韦日森林",ar:"غابة بيلوفيج"}
+];
+const KM = {ru:"км",en:"km",zh:"公里",ar:"كم"};
+const CAPITAL = {ru:"Минск",en:"Minsk",zh:"明斯克",ar:"مينسك"};
+// куда ставить подпись, чтобы соседи не налезали
+const POS = {mir:["l",34],nesvizh:["r",0],brest:["r",0],pushcha:["r",0],grodno:["r",0],lida:["r",0],naroch:["l",0],braslav:["l",0],polotsk:["r",0],vitebsk:["r",0],gomel:["l",0]};
+let lang = "ru";
+
+function drawMap(){
+  const ns = "http://www.w3.org/2000/svg", rays = document.getElementById("rays"), g = document.getElementById("pts");
+  rays.innerHTML = ""; g.innerHTML = "";
+  const [mx,my] = PTS.minsk;
+  DEST.forEach(d => {
+    const [x,y] = PTS[d.id];
+    const l = document.createElementNS(ns,"path"); l.setAttribute("class","ray"); l.setAttribute("d",`M${mx},${my} L${x},${y}`); rays.appendChild(l);
+    const p = document.createElementNS(ns,"g"); p.setAttribute("class","pt"); p.dataset.id = d.id; p.setAttribute("tabindex","0");
+    const [side, dy] = POS[d.id] || ["r",0], left = side === "l", dx = left ? -16 : 16, anchor = left ? "end" : "start";
+    p.innerHTML = `<circle cx="${x}" cy="${y}" r="7"/><text x="${x+dx}" y="${y-4+dy}" text-anchor="${anchor}">${d[lang]}</text><text class="km" x="${x+dx}" y="${y+22+dy}" text-anchor="${anchor}">≈ ${d.km} ${KM[lang]}</text>`;
+    p.addEventListener("mouseenter", () => highlight(d.id)); p.addEventListener("focus", () => highlight(d.id));
+    g.appendChild(p);
+  });
+  const c = document.createElementNS(ns,"g"); c.setAttribute("class","pt capital");
+  c.innerHTML = `<circle cx="${mx}" cy="${my}" r="10"/><text x="${mx+18}" y="${my+6}" style="font-size:32px;font-weight:600">${CAPITAL[lang]}</text>`;
+  g.appendChild(c);
+  const list = document.getElementById("dest"); list.innerHTML = "";
+  DEST.forEach(d => { const li = document.createElement("li"); li.dataset.id = d.id; li.innerHTML = `<span>${d[lang]}</span><span class="mono">≈ ${d.km} ${KM[lang]}</span>`; li.addEventListener("mouseenter", () => highlight(d.id)); list.appendChild(li); });
+}
+function highlight(id){
+  document.querySelectorAll(".pt,.dest li").forEach(el => el.classList.toggle("on", el.dataset.id === id));
+}
+
+function setLang(l){
+  lang = l;
+  const dict = I18N[l];
+  document.documentElement.lang = l;
+  document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el => { const v = dict[el.dataset.i18n]; if (v) el.textContent = v; });
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === l));
+  drawMap();
+}
+document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+document.querySelectorAll(".mood[data-pt]").forEach(a => a.addEventListener("click", () => setTimeout(() => highlight(a.dataset.pt), 400)));
+
+// шапка: прозрачная над видео, плотная дальше
+const topbar = document.getElementById("top");
+const onScroll = () => topbar.classList.toggle("solid", window.scrollY > window.innerHeight * .7);
+addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+const SHOT = new URLSearchParams(location.search).get('shot');
+if (SHOT) { document.documentElement.classList.add('shot'); document.getElementById('paper').remove(); if (SHOT !== '1') setLang(SHOT); }
+// вытинанка: звезда-вырез раскрывается и открывает видео
+(function reveal(){
+  const paper = document.getElementById("paper"), hole = document.getElementById("hole");
+  if (!paper) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { paper.remove(); return; }
+  const r = paper.getBoundingClientRect(), ax = r.height / r.width; // компенсируем растяжение viewBox
+  const t0 = performance.now(), D = 1900;
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  function frame(now){
+    const t = Math.min(1, (now - t0 - 350) / D);
+    const s = t <= 0 ? 0.9 : 0.9 + ease(t) * 14;
+    hole.setAttribute("transform", `translate(50 50) scale(${s * ax} ${s})`);
+    if (t < 1) requestAnimationFrame(frame); else paper.remove();
+  }
+  requestAnimationFrame(frame);
+})();
+
+// фильм
+const dlg = document.getElementById("film");
+document.getElementById("playfilm").addEventListener("click", () => { dlg.showModal(); dlg.querySelector("video").play(); });
+dlg.querySelector("button").addEventListener("click", () => { dlg.querySelector("video").pause(); dlg.close(); });
+
+drawMap();
+</script>
+</body>
+</html>
